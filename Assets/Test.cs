@@ -114,7 +114,14 @@ public class Test : MonoBehaviour {
 		myp.SetStartAndGoal (PlainField.Create (0, 0), PlainField.Create (9, 9));
 		myp.FindPath ();
 		var p = myp.GetPath ();
-		print (p);
+		//print (p);
+
+		print ("Path finding (0,0) to (9,9)");
+		print ("Track Goal to Start:");
+
+		foreach(var v in p){
+			print (v);
+		}
 	}
 	
 	// Update is called once per frame
