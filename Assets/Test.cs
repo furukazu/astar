@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Test : MonoBehaviour {
 
 	// テスト用のフィールドの位置情報を表す
-	private class PlainField : Tuple<int,int>
+	public class PlainField : Tuple<int,int>
 		, IHeuristicDistance<PlainField>
 	{
 
@@ -47,7 +47,21 @@ public class Test : MonoBehaviour {
 	}
 
 	// テスト用の経路探索
-	private class MyPathFind : PathFinding<PlainField>{
+	public  class MyPathFind : PathFinding<PlainField>{
+
+		private List<List<int>> theField;
+		
+		public void SetField(List<List<int>> field){
+			theField = field;
+		}
+
+		public override void SetStartAndGoal (PlainField s, PlainField g)
+		{
+			theField[s.X][s.Y] = 1;
+			theField[g.X][g.Y] = 2;
+
+			base.SetStartAndGoal (s, g);
+		}
 
 		/// <summary>
 		/// 隣り合うフィールドは上下左右とします
@@ -82,6 +96,16 @@ public class Test : MonoBehaviour {
 			base.OnPostSetup ();
 
 			// 障害物があるとする
+			theField[0][3] = 3;
+			theField[1][3] = 3;
+			theField[2][3] = 3;
+			theField[3][3] = 3;
+			theField[4][3] = 3;
+			theField[5][3] = 3;
+			theField[6][3] = 3;
+			theField[7][3] = 3;
+			theField[8][3] = 3;
+
 			cache [PlainField.Create (0,3)] = PFState.Closed;
 			cache [PlainField.Create (1,3)] = PFState.Closed;
 			cache [PlainField.Create (2,3)] = PFState.Closed;
@@ -92,6 +116,16 @@ public class Test : MonoBehaviour {
 			cache [PlainField.Create (7,3)] = PFState.Closed;
 			cache [PlainField.Create (8,3)] = PFState.Closed;
 
+
+			theField[9][6] = 3;
+			theField[8][6] = 3;
+			theField[7][6] = 3;
+			theField[6][6] = 3;
+			theField[5][6] = 3;
+			theField[4][6] = 3;
+			theField[3][6] = 3;
+			theField[2][6] = 3;
+			theField[1][6] = 3;
 			cache [PlainField.Create (9,6)] = PFState.Closed;
 			cache [PlainField.Create (8,6)] = PFState.Closed;
 			cache [PlainField.Create (7,6)] = PFState.Closed;
@@ -109,6 +143,8 @@ public class Test : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		return ;
+
 		myp = new MyPathFind ();
 		// 0,0から9,9までの経路探索
 		myp.SetStartAndGoal (PlainField.Create (0, 0), PlainField.Create (9, 9));

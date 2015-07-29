@@ -10,6 +10,9 @@ using System.Collections.Generic;
 /// </summary>
 public class PathFinding<T> where T : IHeuristicDistance<T>  {
 
+
+
+
 	public enum PFState{
 		None,
 		Opened,
@@ -56,7 +59,7 @@ public class PathFinding<T> where T : IHeuristicDistance<T>  {
 	}
 
 
-	public void SetStartAndGoal(T s,T g){
+	public virtual void SetStartAndGoal(T s,T g){
 		Start = s;
 		Goal = g;
 		OnPostSetup ();
